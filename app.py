@@ -9,7 +9,7 @@ def get_prediction(data) :
 
 @app.route('/')
 def hello():
-    return 'Hello World'
+    return 'Hello World / Heroku'
 
 @app.route('/model')
 def detection():
