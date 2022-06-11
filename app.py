@@ -1,6 +1,3 @@
-from crypt import methods
-from distutils.log import debug
-from urllib import request
 from flask import Flask, request
 from flask_cors import CORS
 
@@ -25,4 +22,4 @@ def detection():
         return get_prediction(data)
 
 if __name__ == '__main__' :
-    app.run(host='0.0.0.0', debug=True, port=8000)
+    app.run(debug=True, port=5000)
