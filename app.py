@@ -55,7 +55,7 @@ def get_prediction(data) :
     word_index = tokenizer.word_index
     sequences_test = pad_sequences(sequences_test, maxlen=MAX_SEQUENCE_LENGTH, padding = 'post')
     model = keras.models.load_model('./model_save')
-    #sss
+    
     get_fil_tgt = K.function([model.layers[0].input, model.layers[3].input],
                                     [model.layers[4].output, model.layers[5].output])
 
