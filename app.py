@@ -6,12 +6,10 @@ import torch
 from torch.utils.data import Dataset, DataLoader
 import torch.nn.functional as F
 import torch.nn as nn
-import math
-from keras.preprocessing.sequence import pad_sequences
+import math, keras
+from keras_preprocessing.sequence import pad_sequences
 from keras.preprocessing.text import Tokenizer
-from keras.preprocessing.sequence import pad_sequences
 from keras import backend as K
-MAX_SEQUENCE_LENGTH = 54
 
 
 class TestDataset(Dataset) :
@@ -24,7 +22,7 @@ class TestDataset(Dataset) :
   
   def __getitem__(self, idx):
     text = self.df.iloc[idx, 0]
-    item = (self.df.iloc[idx, 1], self.df.iloc[idx, 3], self.df.iloc[idx, 4])
+    item = self.df.iloc[idx, 1]
     return text, item
 
 app = Flask(__name__)
@@ -53,9 +51,8 @@ def get_prediction(data) :
     for text in received_text:
         valid_lengths.append(len(text.split(' '))) 
     sequences_test = tokenizer.texts_to_sequences(received_text)
-
+    valid_lengths = np.array(valid_lengths)
     word_index = tokenizer.word_index
-    # print('Found %s unique tokens.' % len(word_index))
     sequences_test = pad_sequences(sequences_test, maxlen=MAX_SEQUENCE_LENGTH, padding = 'post')
     model = keras.models.load_model('./model_save')
 
